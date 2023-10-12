@@ -1116,6 +1116,11 @@ uint32 Player::EnvironmentalDamage(EnviromentalDamage type, uint32 damage)
 
     uint32 final_damage = Unit::DealDamage(this, this, damage, nullptr, damageType, SPELL_SCHOOL_MASK_NORMAL, nullptr, false);
 
+#ifdef BUILD_ELUNA
+    if (!IsAlive())
+        sEluna->OnPlayerKilledByEnvironment(this, type);
+#endif
+
     if (!IsAlive())
     {
         if (type == DAMAGE_FALL)                            // DealDamage not apply item durability loss at self damage
